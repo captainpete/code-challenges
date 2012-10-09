@@ -15,16 +15,16 @@
 
 (def fast-filter (memoize filter-by-previous2))
 
-(defn space []
-  (filter #(some symbol? %)
-          (reduce concat
-                 (pmap (fn [char1] (for [char2 (filter-by-previous char1)
-                                         char3 (fast-filter char2 char1)
-                                         char4 (fast-filter char3 char2)
-                                         char5 (fast-filter char4 char3)
-                                         char6 (fast-filter char5 char4)
-                                         char7 (fast-filter char6 char5)
-                                         char8 (fast-filter char7 char6)]
 
-                                     [char1 char2 char3 char4 char5 char6 char7 char8]))
-                       possibles))))
+(defn space []
+  (reduce concat
+          (pmap (fn [char1] (for [char2 (filter-by-previous char1)
+                                  char3 (fast-filter char2 char1)
+                                  char4 (fast-filter char3 char2)
+                                  char5 (fast-filter char4 char3)
+                                  char6 (fast-filter char5 char4)
+                                  char7 (fast-filter char6 char5)
+                                  char8 (fast-filter char7 char6)]
+
+                              [char1 char2 char3 char4 char5 char6 char7 char8]))
+                possibles)))
